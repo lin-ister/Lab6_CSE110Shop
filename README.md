@@ -1,1 +1,1 @@
-https://github.com/lin-ister/Lab6_CSE110Shop
+https://lin-ister.github.io/Lab6_CSE110Shop/
