@@ -6,21 +6,66 @@ class ProductItem extends HTMLElement {
     super();
     let shadow = this.attachShadow({mode: 'open'});
     var li = document.createElement('li');
+    li.setAttribute('class', 'product');
 
     var img = document.createElement('img');
     img.src = a;
     img.alt = b;
 
+    img.setAttribute('class', 'img');
+
     var title = document.createElement('p');
     title.innerHTML = b;
 
+    title.setAttribute('class', 'title');
+
+
+    function addZeroes(num) {
+      return num.toFixed(2);
+    }
+
+    var dollar = addZeroes(c);
     var price = document.createElement('p');
-    price.innerHTML = c; 
+    price.innerHTML = '$' + dollar.toString(); 
+
+
+
+    price.setAttribute('class', 'price');
     
-    var button = document.createElement('button');
-    button.onClick = function() {alert('Added to Cart!').innerHTML('Add to Cart');}
+
+    var mixbut = document.createElement('button');
+    mixbut.innerHTML = 'Add to Cart';
+    var cartcount = document.getElementById('cart-count');
+    mixbut.addEventListener('click', addTo);
+
+
+    function addTo(){
+      alert('Added to Cart');
+      var count = parseFloat(cartcount.innerHTML);
+      count = count + 1;
+      cartcount.innerHTML = count.toString();
+      mixbut.removeEventListener('click', addTo);
+      mixbut.addEventListener("click", removeFrom);
+      mixbut.innerHTML = 'Remove From Cart';
+    }
+    
+    function removeFrom(){
+      alert('Added to Cart');
+      var count = parseFloat(cartcount.innerHTML);
+      count = count - 1;
+      cartcount.innerHTML = count.toString();
+      mixbut.removeEventListener('click', removeFrom);
+      mixbut.addEventListener("click", addTo);
+      mixbut.innerHTML = 'Add to Cart';
+    }    
+
+
+    
+    mixbut.setAttribute('class', 'button');
+
 
     let style = document.createElement('style');
+    
     style.textContent = `
 .price {
   color: green;
@@ -47,7 +92,7 @@ class ProductItem extends HTMLElement {
   width: 200px;
 }
 
-.product > button {
+.button {
   background-color: rgb(255, 208, 0);
   border: none;
   border-radius: 5px;
@@ -58,13 +103,13 @@ class ProductItem extends HTMLElement {
   transition: 0.1s ease all;
 }
 
-.product > button:hover {
+.button:hover {
   background-color: rgb(255, 166, 0);
   cursor: pointer;
   transition: 0.1s ease all;
 }
 
-.product > img {
+.img {
   align-self: center;
   justify-self: center;
   width: 100%;
@@ -86,12 +131,15 @@ class ProductItem extends HTMLElement {
   text-overflow: unset;
 }
     `;
-shadow.appendChild(li);
-li.appendChild(img);
-li.appendChild(title);
-li.appendChild(price);
-li.appendChild(button);
-shadow.appendChild(style);
+    
+
+    shadow.appendChild(style);
+    shadow.appendChild(li);
+
+    li.appendChild(img);
+    li.appendChild(title);
+    li.appendChild(price);
+    li.appendChild(mixbut);
 
   }
 }
