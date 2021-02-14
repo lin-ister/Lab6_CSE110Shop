@@ -9,7 +9,7 @@ const url = 'https://fakestoreapi.com/products';
   fetch(url)
   .then((resp) => resp.json())
   .then(function(data) {
-    localStorage.setItem('products' + new Date().getTime(), JSON.stringify(data));
+    localStorage.setItem('products', JSON.stringify(data));
     let prods = JSON.parse(localStorage.getItem('products'));
     return prods.map(function(prod){
       let img = prod.image;
